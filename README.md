@@ -1,5 +1,7 @@
 # Decentralized File Storage System using IPFS
 
+![image](https://github.com/user-attachments/assets/0793de3b-08a1-453d-8b62-eddf7ceeb227)
+
 A modern web application that provides decentralized file storage capabilities using the InterPlanetary File System (IPFS) through Pinata's infrastructure. Built with React and styled with Material-UI, it offers a sleek, user-friendly interface for uploading and managing files in a decentralized manner.
 
 ## 🚀 Key Features
