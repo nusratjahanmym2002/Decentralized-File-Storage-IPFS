@@ -21,6 +21,7 @@ import {
   OpenInNew as OpenInNewIcon,
   LibraryBooks as LibraryBooksIcon
 } from '@mui/icons-material';
+import ColorfulCanvas from './components/ColorfulCanvas';
 
 const VisuallyHiddenInput = styled('input')`
   clip: rect(0 0 0 0);
@@ -83,133 +84,138 @@ function App() {
   };
 
   return (
-    <Box 
-      sx={{ 
-        width: '100%',
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        p: 2
-      }}
-    >
-      <Container maxWidth="sm">
-        <Box sx={{ 
+    <>
+      <ColorfulCanvas />
+      <Box 
+        sx={{ 
           width: '100%',
+          minHeight: '100vh',
           display: 'flex',
-          flexDirection: 'column',
-          gap: 3
-        }}>
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="h3" component="h1" gutterBottom color="primary">
-              Decentralized File Storage
-            </Typography>
-            <Typography variant="h6" color="text.secondary" gutterBottom>
-              Powered by IPFS
-            </Typography>
-          </Box>
-
-          <Paper elevation={3} sx={{ p: 4 }}>
-            <Box component="form" onSubmit={handelSubmit} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-              <Button
-                component="label"
-                variant="contained"
-                startIcon={<CloudUploadIcon />}
-                sx={{ mb: 2 }}
-              >
-                {file ? file.name : 'Choose File'}
-                <VisuallyHiddenInput
-                  type="file"
-                  onChange={(e) => {
-                    setFile(e.target.files[0]);
-                    setError("");
-                  }}
-                />
-              </Button>
-              
-              <Button 
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={isLoading || !file}
-                sx={{ minWidth: 200 }}
-              >
-                {isLoading ? "Uploading..." : "Upload to IPFS"}
-              </Button>
+          alignItems: 'center',
+          justifyContent: 'center',
+          p: 2,
+          position: 'relative',
+          zIndex: 1
+        }}
+      >
+        <Container maxWidth="sm">
+          <Box sx={{ 
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 3
+          }}>
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="h3" component="h1" gutterBottom color="primary">
+                Decentralized File Storage
+              </Typography>
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                Powered by IPFS
+              </Typography>
             </Box>
 
-            {isLoading && (
-              <Box sx={{ width: '100%', mt: 2 }}>
-                <LinearProgress />
-              </Box>
-            )}
-
-            {error && (
-              <Fade in={!!error}>
-                <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>
-              </Fade>
-            )}
-            
-            {fileUrl && (
-              <Fade in={!!fileUrl}>
-                <Alert severity="success" sx={{ mt: 2 }}>
-                  File uploaded successfully!{' '}
-                  <Button
-                    size="small"
-                    endIcon={<OpenInNewIcon />}
-                    href={fileUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View File
-                  </Button>
-                </Alert>
-              </Fade>
-            )}
-          </Paper>
-
-          {uploadedFiles.length > 0 && (
-            <Paper elevation={3} sx={{ p: 3 }}>
-              <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <LibraryBooksIcon sx={{ mr: 1 }} />
-                Uploaded Files
-              </Typography>
-              <List>
-                {uploadedFiles.map((item, index) => (
-                  <ListItem
-                    key={index}
-                    divider={index !== uploadedFiles.length - 1}
-                    sx={{ 
-                      '&:hover': { 
-                        bgcolor: 'action.hover',
-                        transition: 'background-color 0.2s'
-                      }
+            <Paper elevation={3} sx={{ p: 4 }}>
+              <Box component="form" onSubmit={handelSubmit} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                <Button
+                  component="label"
+                  variant="contained"
+                  startIcon={<CloudUploadIcon />}
+                  sx={{ mb: 2 }}
+                >
+                  {file ? file.name : 'Choose File'}
+                  <VisuallyHiddenInput
+                    type="file"
+                    onChange={(e) => {
+                      setFile(e.target.files[0]);
+                      setError("");
                     }}
-                  >
-                    <ListItemText
-                      primary={item.name}
-                      secondary={item.timestamp}
-                      sx={{ pr: 2 }}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        edge="end"
-                        color="primary"
-                        href={item.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <OpenInNewIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
+                  />
+                </Button>
+                
+                <Button 
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={isLoading || !file}
+                  sx={{ minWidth: 200 }}
+                >
+                  {isLoading ? "Uploading..." : "Upload to IPFS"}
+                </Button>
+              </Box>
+
+              {isLoading && (
+                <Box sx={{ width: '100%', mt: 2 }}>
+                  <LinearProgress />
+                </Box>
+              )}
+
+              {error && (
+                <Fade in={!!error}>
+                  <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>
+                </Fade>
+              )}
+              
+              {fileUrl && (
+                <Fade in={!!fileUrl}>
+                  <Alert severity="success" sx={{ mt: 2 }}>
+                    File uploaded successfully!{' '}
+                    <Button
+                      size="small"
+                      endIcon={<OpenInNewIcon />}
+                      href={fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      View File
+                    </Button>
+                  </Alert>
+                </Fade>
+              )}
             </Paper>
-          )}
-        </Box>
-      </Container>
-    </Box>
+
+            {uploadedFiles.length > 0 && (
+              <Paper elevation={3} sx={{ p: 3 }}>
+                <Typography variant="h6" sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <LibraryBooksIcon sx={{ mr: 1 }} />
+                  Uploaded Files
+                </Typography>
+                <List>
+                  {uploadedFiles.map((item, index) => (
+                    <ListItem
+                      key={index}
+                      divider={index !== uploadedFiles.length - 1}
+                      sx={{ 
+                        '&:hover': { 
+                          bgcolor: 'action.hover',
+                          transition: 'background-color 0.2s'
+                        }
+                      }}
+                    >
+                      <ListItemText
+                        primary={item.name}
+                        secondary={item.timestamp}
+                        sx={{ pr: 2 }}
+                      />
+                      <ListItemSecondaryAction>
+                        <IconButton
+                          edge="end"
+                          color="primary"
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <OpenInNewIcon />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  ))}
+                </List>
+              </Paper>
+            )}
+          </Box>
+        </Container>
+      </Box>
+    </>
   );
 }
 
